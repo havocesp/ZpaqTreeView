@@ -7,6 +7,7 @@ import tqdm
 from sys import stderr
 from platform import system
 import traceback
+from security import safe_command
 
 
 class File:
@@ -262,7 +263,7 @@ def main(config=None, file_path=None):
     zpaq_file = None
     try:
         if ext == 'zpaq':
-            contents = Popen([zpaqpath, "l", file_path, "-longpath"], stdout=PIPE, encoding="utf-8",
+            contents = safe_command.run(Popen, [zpaqpath, "l", file_path, "-longpath"], stdout=PIPE, encoding="utf-8",
                              errors="ignore").stdout
             zpaq_file = file_path
         elif ext == 'txt':
